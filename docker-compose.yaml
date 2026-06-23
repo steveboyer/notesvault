@@ -32,6 +32,7 @@ services:
       # Pass the .env variables into the Spring container
       - SPRING_DATASOURCE_USERNAME=${DB_USER}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     networks:
       - spring-postgres-net
 

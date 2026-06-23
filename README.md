@@ -28,3 +28,13 @@
 | Spotless                     | Code formatting enforcement  |
 
 ---
+
+```
+notesvault/
+    config/        SecurityConfig, any beans
+    security/      JWT filter, token service, UserDetails wiring
+    user/          User entity, UserRepository, registration/auth service
+    note/          Note entity, Share entity, repositories, NoteService, NoteController
+    auth/          AuthController (register/login), DTOs for auth
+    common/        exceptions, error handling (ControllerAdvice), shared DTOs
+```
