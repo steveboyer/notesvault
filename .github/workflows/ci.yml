@@ -1,0 +1,35 @@
+name: CI Build & Format Check
+
+on:
+  push:
+    branches:
+      - "main"
+      - "dev"
+  pull_request:
+    branches:
+      - "main"
+      - "dev"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Set up Azul Zulu Java 25
+        uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: 'zulu'
+          cache: 'gradle'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Verify Formatting (Spotless)
+        run: ./gradlew spotlessCheck --no-daemon
+
+      - name: Build Application & Run Tests
+        run: ./gradlew build --no-daemon
