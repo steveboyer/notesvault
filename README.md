@@ -40,6 +40,9 @@
 - Schema generated automatically via Hibernate ddl-auto instead of proper migration using Flyway or similar
 - Sharing is by user id instead of username
 - Minimal permissions model
+- A request for a note the user cannot access returns `404 Not Found`, which avoids leaking the note's existence. The
+  same `404` is also returned when a share recipient tries to edit a note shared with them, where a `403 Forbidden`
+  could arguably be more correct.
 
 ## Future improvements
 
@@ -74,7 +77,7 @@
 ## Tech Stack
 
 | Technology                  | Purpose                      |
-|-----------------------------|------------------------------|
+| --------------------------- | ---------------------------- |
 | Java 25                     | Application language         |
 | Spring Boot 4               | Application framework        |
 | Spring Data JPA / Hibernate | ORM and schema management    |
@@ -98,7 +101,7 @@ Registers a new user account and returns the created user details.
 **Headers**
 
 | Key            | Value              |
-|:---------------|:-------------------|
+| :------------- | :----------------- |
 | `Content-Type` | `application/json` |
 
 **Body**
@@ -140,7 +143,7 @@ Authenticates an existing user and returns a JWT for subsequent requests.
 **Headers**
 
 | Key            | Value              |
-|:---------------|:-------------------|
+| :------------- | :----------------- |
 | `Content-Type` | `application/json` |
 
 **Body**
@@ -183,7 +186,7 @@ Creates a new note for the currently authenticated user.
 **Headers**
 
 | Key             | Value                     |
-|:----------------|:--------------------------|
+| :-------------- | :------------------------ |
 | `Content-Type`  | `application/json`        |
 | `Authorization` | `Bearer <your_jwt_token>` |
 
@@ -230,7 +233,7 @@ Get all notes for the currently authenticated user
 **Headers**
 
 | Key             | Value                     |
-|:----------------|:--------------------------|
+| :-------------- | :------------------------ |
 | `Authorization` | `Bearer <your_jwt_token>` |
 
 ### Response
@@ -263,7 +266,7 @@ curl http://localhost:8080/notes \
 **Headers**
 
 | Key             | Value                     |
-|:----------------|:--------------------------|
+| :-------------- | :------------------------ |
 | `Authorization` | `Bearer <your_jwt_token>` |
 
 ### Response
@@ -295,7 +298,7 @@ curl http://localhost:8080/notes/1 \
 **Headers**
 
 | Key             | Value                     |
-|:----------------|:--------------------------|
+| :-------------- | :------------------------ |
 | `Content-Type`  | `application/json`        |
 | `Authorization` | `Bearer <your_jwt_token>` |
 
@@ -326,12 +329,12 @@ curl -X PUT http://localhost:8080/notes/1 \
 **Headers**
 
 | Key             | Value                     |
-|:----------------|:--------------------------|
+| :-------------- | :------------------------ |
 | `Authorization` | `Bearer <your_jwt_token>` |
 
 ### Response
 
-`204 No Content`   
+`204 No Content`  
 `404 Not Found` if not found or not owned
 
 ### Example usage (curl)
@@ -348,7 +351,7 @@ curl -X DELETE http://localhost:8080/notes/1 \
 **Headers**
 
 | Key             | Value                     |
-|:----------------|:--------------------------|
+| :-------------- | :------------------------ |
 | `Authorization` | `Bearer <your_jwt_token>` |
 
 ```json
