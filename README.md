@@ -1,4 +1,5 @@
 # Notes Vault
+![CI](https://github.com/steveboyer/notesvault/actions/workflows/ci.yml/badge.svg)
 
 ## Highlights
 
