@@ -1,5 +1,9 @@
 # Notes Vault
+
 ![CI](https://github.com/steveboyer/notesvault/actions/workflows/ci.yml/badge.svg)
+
+A secure REST API for storing personal notes. Users register, authenticate with JWT, and manage their own notes, which
+can be shared read-only with other users. Built with Spring Boot, PostgreSQL, and Docker Compose.
 
 ## Highlights
 
